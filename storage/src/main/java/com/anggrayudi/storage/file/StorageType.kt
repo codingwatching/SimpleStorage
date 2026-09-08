@@ -2,7 +2,7 @@ package com.anggrayudi.storage.file
 
 import android.content.Context
 import android.net.Uri
-import com.anggrayudi.storage.SimpleStorage
+import android.os.Build
 
 /**
  * Created on 17/08/20
@@ -49,7 +49,8 @@ public enum class StorageType {
       when {
         storageId == StorageId.PRIMARY -> EXTERNAL
         storageId == StorageId.DATA -> DATA
-        DocumentFileCompat.isMountedVolumeId(context, storageId) ||
+        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N &&
+          DocumentFileCompat.isMountedVolumeId(context, storageId)) ||
           storageId.matches(DocumentFileCompat.SD_CARD_STORAGE_ID_REGEX) -> SD_CARD
         else -> UNKNOWN
       }

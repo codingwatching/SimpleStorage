@@ -2322,7 +2322,11 @@ private fun DocumentFile.tryMoveFolderByRenamingPath(
     }
 
     try {
-      if (!isRawFile && writableTargetParentFolder.isTreeDocumentFile) {
+      if (
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.N &&
+          !isRawFile &&
+          writableTargetParentFolder.isTreeDocumentFile
+      ) {
         val movedFileUri =
           parentFile?.uri?.let {
             DocumentsContract.moveDocument(
@@ -3287,7 +3291,8 @@ private fun DocumentFile.moveFileTo(
 
   try {
     if (
-      !isRawFile &&
+      Build.VERSION.SDK_INT >= Build.VERSION_CODES.N &&
+        !isRawFile &&
         writableTargetFolder.isTreeDocumentFile &&
         getStorageId(context) == targetStorageId
     ) {
